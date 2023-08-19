@@ -51,6 +51,7 @@ def to_dependencies(json):
     for row in rows:
         name = row["key"]
         result[name] = "*"
+    return result
 
 
 def main():
