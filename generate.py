@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 
-import urllib.request
-import datetime
+"""Generate package.json with all npm packages as dependencies"""
+
 import json
+import datetime
+import urllib3
 
 # Alt: https://skimdb.npmjs.com/registry/_all_docs
 URL = "https://replicate.npmjs.com/_all_docs"
@@ -40,12 +42,15 @@ PACKAGE_JSON = {
 }
 
 
-def fetch(url):
-    with urllib.request.urlopen(url) as f:
-        return f.read().decode("utf-8")
+def fetch(url: str) -> str:
+    """Fetch data from url, enabling brotli compression"""
+    http = urllib3.PoolManager()
+    r = http.request("GET", url, headers={"Accept-Encoding": "br"})
+    return r.data.decode("utf-8")
 
 
-def to_dependencies(json):
+def to_dependencies(json: dict) -> dict[str, str]:
+    """Convert json to dependencies dict"""
     rows = json["rows"]
     result = {}
     for row in rows:
@@ -55,8 +60,10 @@ def to_dependencies(json):
 
 
 def main():
+    """Main entry"""
     data = fetch(URL)
     json_data = json.loads(data)
+    print(f"Total packages: {json_data['total_rows']}")
     PACKAGE_JSON["dependencies"] = to_dependencies(json_data)
     with open("package.json", "w") as f:
         json.dump(PACKAGE_JSON, f)
