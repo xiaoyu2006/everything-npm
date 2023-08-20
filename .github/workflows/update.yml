@@ -27,6 +27,11 @@ jobs:
 
       - run: python generate.py
 
+      - uses: actions/upload-artifact@v2
+        with:
+          name: The Way-Too-Big File
+          path: package.json
+
       - run: npm publish --loglevel verbose
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
