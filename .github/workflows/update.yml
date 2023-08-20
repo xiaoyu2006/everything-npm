@@ -27,7 +27,6 @@ jobs:
 
       - run: python generate.py
 
-
-      - run: npm publish
+      - run: npm publish --loglevel verbose
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

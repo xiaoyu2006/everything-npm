@@ -23,13 +23,7 @@ PACKAGE_JSON = {
         "type": "git",
         "url": "https://github.com/xiaoyu2006/everything-npm.git",
     },
-    "author": [
-        {
-            "name": "Yi Cao",
-            "email": "me@ycao.top",
-            "url": "https://ycao.top",
-        }
-    ],
+    "author": "Yi Cao",
     "keywords": [
         "npm",
         "everything",
@@ -49,12 +43,14 @@ def fetch(url: str) -> str:
     return r.data.decode("utf-8")
 
 
-def to_dependencies(json: dict) -> dict[str, str]:
+def to_dependencies(json_data: dict) -> dict[str, str]:
     """Convert json to dependencies dict"""
-    rows = json["rows"]
+    rows = json_data["rows"]
     result = {}
     for row in rows:
         name = row["key"]
+        if name == "everything-npm":
+            continue  # Don't depend on self
         result[name] = "*"
     return result
 
