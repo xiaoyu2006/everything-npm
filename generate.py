@@ -11,9 +11,11 @@ import urllib3
 # https://replicate.npmjs.com/_all_docs
 URL = "https://skimdb.npmjs.com/registry/_all_docs"
 
+PACKAGE_NAME = "the-whole-registry"
+
 # npm package.json as a dict
 PACKAGE_JSON = {
-    "name": "everything-npm",
+    "name": PACKAGE_NAME,
     # Use current date for version
     "version": f"{datetime.datetime.now():%Y.%m.%d}",
     "description": "Install every single npm packages",
@@ -51,7 +53,8 @@ def to_dependencies(json_data: dict) -> dict[str, str]:
     result = {}
     for row in rows:
         name = row["key"]
-        if name == "everything-npm":
+        if name == PACKAGE_NAME:
+            print("Greets to myself!")
             continue  # Don't depend on self
         result[name] = "*"
     return result
