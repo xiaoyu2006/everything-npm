@@ -6,8 +6,10 @@ import json
 import datetime
 import urllib3
 
-# Alt: https://skimdb.npmjs.com/registry/_all_docs
-URL = "https://replicate.npmjs.com/_all_docs"
+# Alt:
+# https://skimdb.npmjs.com/registry/_all_docs
+# https://replicate.npmjs.com/_all_docs
+URL = "https://skimdb.npmjs.com/registry/_all_docs"
 
 # npm package.json as a dict
 PACKAGE_JSON = {
